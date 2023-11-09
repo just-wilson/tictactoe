@@ -7,7 +7,7 @@ function App() {
   return (
     <>
      <h1>
-      TIC
+      TIC TAC TOE
      </h1>
     </>
   )
