@@ -5,10 +5,10 @@ type squareProps = {
 
 const Square = ({ value, onSquareClick }: squareProps) => {
     return (
-        <button className="square" onClick={onSquareClick}>
-            {value}
-        </button>
+      <button className="square" onClick={onSquareClick}>
+        {value}
+      </button>
     );
-};
+  }
 
 export default Square;
