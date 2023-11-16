@@ -34,13 +34,15 @@ const Board = ({ xIsNext, squares, onPlay }: boardProps) => {
     <>
       <div className="status">{status}</div>
       {[0, 1, 2].map((rowIndex) => {
-            <div className="board-row">
-                {[0, 1, 2].map((colIndex) => {
-                    const index = rowIndex * 3 + colIndex;
-                    return <Square key={index} value={squares[index]} onSquareClick={() => {handleClick(index)}} />
-                })}
-            </div>
-        })}
+            return (
+                <div className="board-row" key={rowIndex}>
+                    {[0, 1, 2].map((colIndex) => {
+                        var index = rowIndex * 3 + colIndex;
+                        return <Square key={index} value={squares[index]} onSquareClick={() => {handleClick(index)}} />
+                    })}
+                </div>
+            );
+        })};
     </>
   );
 }
