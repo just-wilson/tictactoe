@@ -4,10 +4,11 @@ import { calculateWinner } from './utility';
 type boardProps = {
     xIsNext: boolean;
     squares: string[];
+    currentMove: number;
     onPlay: (nextSquares: string[]) => void;
 };
 
-const Board = ({ xIsNext, squares, onPlay }: boardProps) => {
+const Board = ({ xIsNext, squares, currentMove, onPlay }: boardProps) => {
     function handleClick(i: number) {
       if (calculateWinner(squares) || squares[i]) {
         return;
@@ -25,6 +26,8 @@ const Board = ({ xIsNext, squares, onPlay }: boardProps) => {
     let status;
     if (winner) {
       status = 'Winner: ' + winner;
+    } else if (currentMove === 9) {
+        status = 'It\'s a Draw!!';
     } else {
       status = 'Next player: ' + (xIsNext ? 'X' : 'O');
     }
