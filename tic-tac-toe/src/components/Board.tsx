@@ -1,34 +1,49 @@
-// import Square from "./Square";
+import Square from "./Square";
+import { calculateWinner } from './utility';
 
-// type boardProps = {
-//     squares: string[];
-//     isNextX: boolean;
-// };
+type boardProps = {
+    xIsNext: boolean;
+    squares: string[];
+    onPlay: (nextSquares: string[]) => void;
+};
 
-// const Board = ({squares, isNextX}: boardProps) => {
-//     const handelSquareClick = (index: number) => {
-//         if  (squares[index] !== null) {
-//             return;
-//         } else if (isNextX) {
-//             squares[index] = "X";
-//         } else {
-//             squares[index] = "O";
-//         }
-//     };
-//     // do some logic here
+const Board = ({ xIsNext, squares, onPlay }: boardProps) => {
+    function handleClick(i: number) {
+      if (calculateWinner(squares) || squares[i]) {
+        return;
+      }
+      const nextSquares = squares.slice();
+      if (xIsNext) {
+        nextSquares[i] = 'X';
+      } else {
+        nextSquares[i] = 'O';
+      }
+      onPlay(nextSquares);
+    }
+  
+    const winner = calculateWinner(squares);
+    let status;
+    if (winner) {
+      status = 'Winner: ' + winner;
+    } else {
+      status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+    }
+  
+    return (
+      <>
+        <div className="status">{status}</div>
+        {[0, 1, 2].map((rowIndex) => {
+              return (
+                  <div className="board-row" key={rowIndex}>
+                      {[0, 1, 2].map((colIndex) => {
+                          var index = rowIndex * 3 + colIndex;
+                          return <Square key={index} value={squares[index]} onSquareClick={() => {handleClick(index)}} />
+                      })}
+                  </div>
+              );
+          })};
+      </>
+    );
+  }
 
-//     return (
-//         <>
-//         {[0, 1, 2].map((rowIndex) => {
-//             <div className="board-row">
-//                 {[0, 1, 2].map((colIndex) => {
-//                     const index = rowIndex * 3 + colIndex;
-//                     return <Square key={index} value={squares[index]} handelSquareClick={() => {handelSquareClick(index)}} />
-//                 })}
-//             </div>
-//         })}
-//         </>
-//     );
-// };
-
-// export default Board;
+export default Board;
