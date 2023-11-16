@@ -41,7 +41,7 @@ const Board = ({ xIsNext, squares, onPlay }: boardProps) => {
                       })}
                   </div>
               );
-          })};
+          })}
       </>
     );
   }
