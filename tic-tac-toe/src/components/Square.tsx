@@ -1,11 +1,12 @@
 type squareProps = {
     value: string;
+    isWinningSquare: boolean;
     onSquareClick: () => void;
 };
 
-const Square = ({ value, onSquareClick }: squareProps) => {
+const Square = ({ value, isWinningSquare, onSquareClick }: squareProps) => {
     return (
-      <button className="square" onClick={onSquareClick}>
+      <button className={`square ${isWinningSquare ? 'winningSquare' : ''}`} onClick={onSquareClick}>
         {value}
       </button>
     );

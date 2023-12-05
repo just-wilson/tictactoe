@@ -10,7 +10,7 @@ type boardProps = {
 
 const Board = ({ xIsNext, squares, currentMove, onPlay }: boardProps) => {
     function handleClick(i: number) {
-      if (calculateWinner(squares) || squares[i]) {
+      if (calculateWinner(squares).winner || squares[i]) {
         return;
       }
       const nextSquares = squares.slice();
@@ -21,11 +21,24 @@ const Board = ({ xIsNext, squares, currentMove, onPlay }: boardProps) => {
       }
       onPlay(nextSquares);
     }
-  
-    const winner = calculateWinner(squares);
+   
+    const winningLine = calculateWinner(squares);
+    const winner = winningLine.winner;
+    const line = winningLine.line;
+
     let status;
     if (winner) {
-      status = 'Winner: ' + winner;
+      const rand = Math.floor(Math.random() * 4);
+      const looser = winner === 'X' ? 'O' : 'X';
+      if (rand === 0) {
+        status = 'Big dub for ' + winner;
+      } else if (rand === 1) { 
+        status = looser + " got clapped by " + winner + "!";
+      } else if (rand === 2) {
+        status = looser + " be catching L's";
+      } else {
+        status = winner + " is GOATED!";
+      }
     } else if (currentMove === 9) {
         status = 'It\'s a Draw!!';
     } else {
@@ -40,7 +53,11 @@ const Board = ({ xIsNext, squares, currentMove, onPlay }: boardProps) => {
                   <div className="board-row" key={rowIndex}>
                       {[0, 1, 2].map((colIndex) => {
                           var index = rowIndex * 3 + colIndex;
-                          return <Square key={index} value={squares[index]} onSquareClick={() => {handleClick(index)}} />
+                          return <Square key={index} 
+                                  value={squares[index]} 
+                                  isWinningSquare={line != null && line.includes(index)} 
+                                  onSquareClick={() => {handleClick(index)}} 
+                                  />
                       })}
                   </div>
               );
